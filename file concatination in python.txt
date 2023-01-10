@@ -1,0 +1,8 @@
+#Steps to concatenate files
+
+filenames = os.listdir("C:\\Users\\Matt\\Documents\\John Lydgate Works Text Files\\Religious Poems\\Eight-line rhyme royal\\Raw Text")
+with open('C:\\Users\\Matt\\Documents\\Test_concat_file.txt', 'w') as outfile: 
+	for file in filenames:
+		with open('C:\\Users\\Matt\\Documents\\John Lydgate Works Text Files\\Religious Poems\\Eight-line rhyme royal\\Raw Text\\' + file,'r') as infile:
+			contents = infile.read()
+			outfile.write(contents + " ")

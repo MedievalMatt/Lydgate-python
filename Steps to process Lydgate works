@@ -1,0 +1,69 @@
+Steps to process lydgate works.
+
+0. Check text against EETS and confirm correct.
+1. eliminate all carriage returns.
+2. eliminate all punctuation.
+3. make entire text lowercase.
+4. save text.
+
+OR:
+
+1-3. Run concat_lydgate.py
+4. import file contents into python:
+	
+	with open('C:\\Users\\Matt\\Documents\\Test_concat_file.txt', 'r', encoding='utf-8') as f:
+	text = f.read()
+
+5. process string with python:
+
+	import nltk
+	text = "STRING FROM 1-4"
+	words = nltk.tokenize.word_tokenize(text)
+	fdist1 = nltk.FreqDist(words)
+	filtered_word_freq = dict((word,freq) for word,freq in fdist1.items() if not word.isdigit())
+	print(filtered_word_freq)
+
+6. copy result and save as json file.
+or
+6. save as json file in python:
+	
+	import json
+	with open('C:\\Users\\Matt\\Documents\\EETS_Lydgate.json','w') as e:
+		json.dump(filtered_word_freq,e)
+
+7. convert json into excel sheet.
+8. order excel sheet alphabetically
+9. check for alternate spellings and adjust
+10. process new results with python:
+
+	import nltk
+	text = "STRING FROM 9"
+	words = nltk.tokenize.word_tokenize(text)
+	fdist1 = nltk.FreqDist(words)
+	filtered_word_freq = dict((word,freq) for word,freq in fdist1.items() if not word.isdigit())
+	print(filtered_word_freq)
+
+11. add stopwords
+	A. sort through excel sheet and mark words to be stopwords
+	B. generate lists - CSV to comma-separated string
+	C. set comma-separated string as variable - stopwords_raw = "CSV"
+	D. Final list - stopwords = stopwords_raw.split(",")
+
+12. filtered stopwords code:
+	
+	filtered_words = [w for w in words if not w.lower() in stopwords]
+
+TO GET LEXICAL DIVERSITY:
+
+	print(len(set(VARIABLE)) / len(VARIABLE))
+
+TO GET RELATIVE FREQUENCY:
+
+	counts = [(word, VARIABLE.count(word) / len(VARIABLE)) for word in set(VARIABLE)]
+	formatted_counts = [(word,format(ratio,'f')) for word,ratio in counts]
+	sorted(formatted_counts, key=lambda word: word[1], reverse=True)
+
+TO DUMP TO JSON FILE:
+	with open('C:\\Users\\Matt\\Documents\\EETS_Lydgate_FreqDist_Sorted.json','w') as d:
+		json.dumps(sorted(formatted_counts, key=lambda word: word[1], reverse=True),d)
+
